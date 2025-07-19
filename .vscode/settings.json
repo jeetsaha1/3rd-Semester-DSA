@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.ino": "python",
+        "stdio.h": "c",
+        "stdlib.h": "c"
+    }
+}
