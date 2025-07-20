@@ -35,6 +35,21 @@ void push(struct stack * ptr){
     }
 }
 
+//Algorithm for push()
+/*
+PUSH(stack, value)
+BEGIN
+    IF top == size THEN
+        PRINT "Stack Overflow"
+    
+    ELSE
+        top := top + 1
+        stack[top] := value
+    ENDIF
+END
+*/
+
+
 //Declearing the pop() function
 int pop(struct stack * ptr){
     int item;
@@ -48,6 +63,21 @@ int pop(struct stack * ptr){
     return item;
 }
 
+//Algorithm for pop()
+/*
+POP(stack)
+BEGIN
+    IF top == -1 THEN 
+        PRINT "Stack Underflow"
+        RETURN null
+    ELSE
+        value := stack[top]
+        top := top-1
+        RETURN value
+    ENDIF
+END
+*/
+
 //Declearing the peek function
 int peek(struct stack * ptr){
     if(isEmpty(ptr)){
@@ -55,6 +85,19 @@ int peek(struct stack * ptr){
     }
     return ptr->arr[ptr->top];
 }
+
+//Algorithm for Peek()
+/*
+PEEK(stack)
+BEGIN
+    IF top == -1 THEN 
+        PRINT "Empty Stack"
+        RETURN null
+    ELSE
+        RETURN stack[top]
+    ENDIF
+END
+*/
 
 //Declearing the display function
 void display(struct stack *ptr){
@@ -64,6 +107,20 @@ void display(struct stack *ptr){
     }
     
 }
+
+//Algorithm for display()
+/*
+DISPLAY(stack)
+BEGIN
+    IF top == -1 THEN 
+        PRINT "Empty Stack"
+    ELSE
+        FOR i ← top DOWNTO 0 DO
+            PRINT stack[i]
+        ENDFOR
+    ENDIF
+END
+*/
 
 int main(){
     //Initialize the structure and its memory space dynamically
