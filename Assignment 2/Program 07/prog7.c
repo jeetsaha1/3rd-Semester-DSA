@@ -29,7 +29,7 @@ void enqueue(struct queue * q){
     if(isFull(q)){
         printf("Queue overflow");
     }
-    else{
+    else{            
         printf("Enter the number :");
         scanf("%d",&val);
         q->r= (q->r+1)%q->size;
