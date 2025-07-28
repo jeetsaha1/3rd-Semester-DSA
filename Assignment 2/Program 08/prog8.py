@@ -90,7 +90,7 @@ class queue:
 
 
 #Initialize the classes
-s_temp = stack_temp(10)
+s_temp = stack(10)
 s = stack(10)
 q = queue(10)
 
