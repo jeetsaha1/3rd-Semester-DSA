@@ -3,37 +3,6 @@
 # Note: Consider the queue to be of the same size as that of the original stack.
 
 
-#Creating the stack for temporary using 
-class stack_temp:
-    def __init__(self,capacity):
-        self.stack_temp = []
-        self.capacity = capacity
-    
-    def push(self,item):
-        if len(self.stack_temp) == self.capacity:
-            print("Stack Overflow")
-        else:
-            self.stack_temp.append(item)
-
-    def pop(self):
-        if len(self.stack_temp) == 0:
-            print("Stack Underflow")
-        else:
-            return self.stack_temp.pop()
-        
-    def peek(self):
-        if len(self.stack_temp) == 0:
-            print("Empty stack")
-        else:
-            return self.stack_temp[-1]
-        
-    def is_empty(self):
-        return len(self.stack_temp) == 0
-    
-    def display(self):
-        print (self.stack_temp[::-1])
-
-
 # Creating the main stack for prime colors
 class stack:
     def __init__(self,capacity):
