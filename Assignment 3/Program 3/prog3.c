@@ -63,16 +63,24 @@ node *createNode_at_last(node *head){
 }
 
 node *deleteNode_at_last(node *head){
-    node *p =head;
-    node *q = p->next;
-    while (q->next!= NULL)
-    {
-        p = p->next;
-        q = q->next;
+    if (head == NULL){
+        printf("Empty list");
+        return NULL;
     }
-    p->next = NULL;
-    free(q);
-    
+    else if(head->next == NULL){
+        free(head);
+    }
+    else{
+        node *p =head;
+        node *q = p->next;
+        while (q->next!= NULL)
+        {
+            p = p->next;
+            q = q->next;
+        }
+        p->next = NULL;
+        free(q);
+}
     return head;
 }
 
@@ -115,21 +123,23 @@ node *deleteNode_at_index(node *head,int index){
         printf("List is empty.\n");
         return NULL;
     }
-    node *p = head;
-    int i = 0;
-    if(index == 0){
-        node *temp = head;
-        head = head->next;
-        free(temp);
-        return head;
+    else{
+        node *p = head;
+        int i = 0;
+        if(index == 0){
+            node *temp = head;
+            head = head->next;
+            free(temp);
+            return head;
+        }
+        while(p != NULL && i<index-1){
+            p = p->next;
+            i++;
+        }
+        node *q = p->next;
+        p->next = q->next;
+        free(q);
     }
-    while(p != NULL && i<index-1){
-        p = p->next;
-        i++;
-    }
-    node *q = p->next;
-    p->next = q->next;
-    free(q);
     return head;
 }
 

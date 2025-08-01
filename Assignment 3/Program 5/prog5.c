@@ -62,16 +62,24 @@ node *createNode_at_last(node *head){
 }
 
 node *deleteNode_at_last(node *head){
-    node *p =head;
-    node *q = p->next;
-    while (q->next!= NULL)
-    {
-        p = p->next;
-        q = q->next;
+    if (head == NULL){
+        printf("Empty list");
+        return NULL;
     }
-    p->next = NULL;
-    free(q);
-    
+    else if(head->next == NULL){
+        free(head);
+    }
+    else{
+        node *p =head;
+        node *q = p->next;
+        while (q->next!= NULL)
+        {
+            p = p->next;
+            q = q->next;
+        }
+        p->next = NULL;
+        free(q);
+}
     return head;
 }
 
@@ -114,21 +122,23 @@ node *deleteNode_at_index(node *head,int index){
         printf("List is empty.\n");
         return NULL;
     }
-    node *p = head;
-    int i = 0;
-    if(index == 0){
-        node *temp = head;
-        head = head->next;
-        free(temp);
-        return head;
+    else{
+        node *p = head;
+        int i = 0;
+        if(index == 0){
+            node *temp = head;
+            head = head->next;
+            free(temp);
+            return head;
+        }
+        while(p != NULL && i<index-1){
+            p = p->next;
+            i++;
+        }
+        node *q = p->next;
+        p->next = q->next;
+        free(q);
     }
-    while(p != NULL && i<index-1){
-        p = p->next;
-        i++;
-    }
-    node *q = p->next;
-    p->next = q->next;
-    free(q);
     return head;
 }
 
@@ -165,7 +175,7 @@ int main(){
      node *head;
     int ch,index;
     do{
-        printf("____MENU____\nEnter your choice\n1.Insert at first\n2.Insert at last\n3.Insert at index\n4.Delete at first\n5.Delete at last\n6.Delete at index\n7.Count Node\n8.Exit\n\n");
+        printf("____MENU____\nEnter your choice\n1.Insert at first\n2.Insert at last\n3.Insert at index\n4.Delete at first\n5.Delete at last\n6.Delete at index\n7.Exit\n\n");
         scanf("%d",&ch);
 
         switch(ch){
@@ -198,14 +208,15 @@ int main(){
                 display(head);
                 break;
             case 7:
-                printf("The number of nodes in the linked list is : %d",count_node(head));
-                break;
-            case 8:
                 printf("Exiting...");
                 break;
+            default:
+                printf("You give wrong input");
+                break;
         }
-    }while(ch != 8);
+    }while(ch != 7);
 
     free_list(head);
     return 0;
 }
+
