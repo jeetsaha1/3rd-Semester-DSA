@@ -95,8 +95,9 @@ class linkedList:
             print("None\n")
 
             q = self.head 
+            print("Odd: ")
             while q:
-                if q.data%2 == 0:
+                if q.data%2 != 0:
                     print(q.data,end="-->")
                 q= q.next
             print("None\n")
