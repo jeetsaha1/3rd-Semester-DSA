@@ -248,15 +248,21 @@ node *deleteNode_at_index(node *head,int index){
 //      IF head == NULL THEN
 //          print "Empty List"
 //          RETURN NULL 
-//      ELSE IF head.next != NULL
-//          free the head
 //      ELSE
-//          initialize the node p <- head and q <- p.next
-//          WHILE q.next != NULL DO
+//          initialize the node p <- head and variable i = 0
+//          IF index== 0 THEN
+//              Initialize the node temp <- head
+//              head <- head.next
+//              free the node temp
+//              RETURN head
+//          END IF
+
+//          WHILE q.next != NULL and i< index-1 DO
 //              p <- p.next
-//              q <- q.next
+//              i <- i+1
 //          END WHILE
-//          p.next <- NULL
+//          Initialize the node q <- p.next
+//          p.next = q.next
 //          free the node q
 //      END IF
 //      RETURN head
@@ -280,6 +286,17 @@ void display(node *head){
     }
     printf("NULL\n");
 }
+
+//Algorithm for display()
+// display(head)
+// BEGIN
+//     Initialize the node temp <- head
+//     WHILE temp != NULL DO
+//         print"temp.data"
+//         temp <- temp.next
+//     END WHILE
+//     print"NULL"
+// END
 
 int main(){
      node *head;
