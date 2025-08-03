@@ -33,12 +33,34 @@ node *createNode_at_first(){
     return head;
 }
 
+//Algorithm of createNode_at_first
+// createNode_at_first()
+// BEGIN
+//     Initialize the node pointer nw and head  <- NULL
+//     Initialize the variable data and ch <- 1
+//     WHILE ch != 0 DO
+//         Set nw.data ← data
+//         Set nw.next ← head
+//         Set head ← nw
+//         Prompt user to continue (1) or stop (0)
+//     END WHILE
+// END
+
 node *deleteNode_at_first(node *head){
     node *p =head;
     head = head->next;
     free(p);
     return head;
 }
+
+//Algorithm of deleteNode_at_first()
+// deleteNode_at_first(head)
+// BEGIN
+//     intitalize the pointer node p <- head;
+//     head <- head.next
+//     free the node p
+//     RETURN head
+// END
 
 node *createNode_at_last(node *head){
     node *nw, *p;
@@ -67,6 +89,31 @@ node *createNode_at_last(node *head){
     return head;
 }
 
+//Algorithm of createNode_at_last
+// createNode_at_last(head)
+// BEGIN
+//     Initialize the node pointer nw and p
+//     Initialize the variable data and ch <- 1
+//     WHILE ch != 0 DO
+//         Set nw.data ← data
+//         Set nw.next ← head
+//         Set head ← NULL
+        
+//         IF head == NULL THEN
+//             head <- nw;
+//         ELSE
+//             p <- head
+//             WHILE p.next != NULL DO
+//                 p <- p.next
+//             END WHILE
+//             p.next <- nw;
+//             nw.next <- NULL
+//         END IF
+//         Prompt user to continue (1) or stop (0)
+//     END WHILE
+//     RETURN HEAD
+// END
+
 node *deleteNode_at_last(node *head){
     if (head == NULL){
         printf("Empty list");
@@ -88,6 +135,27 @@ node *deleteNode_at_last(node *head){
 }
     return head;
 }
+
+//Algorithm of deleteNode_at_last()
+// deleteNode_at_last(head)
+// BEGIN
+//      IF head == NULL THEN
+//          print "Empty List"
+//          RETURN NULL
+//      ELSE IF head.next != NULL
+//          free the head
+//      ELSE
+//          initialize the node p <- head and q <- p.next
+//          WHILE q.next != NULL DO
+//              p <- p.next
+//              q <- q.next
+//          END WHILE
+//          p.next <- NULL
+//          free the node q
+//      END IF
+//      RETURN head
+
+// END
 
 node *createNode_at_index(node *head, int index){
     node *nw, *p;
@@ -123,6 +191,32 @@ node *createNode_at_index(node *head, int index){
     return head;
 }
 
+//Algorithm of createNode_at_index
+// createNode_at_index(head,index)
+// BEGIN
+//     Initialize the node pointer nw and p
+//     Initialize the variable data ,ch <- 1 ,i = 0
+//     WHILE ch != 0 DO
+//         Set nw.data ← data
+//         Set nw.next ← head
+//         Set head ← NULL
+        
+//         IF head == NULL THEN
+//             head <- nw;
+//         ELSE
+//             p <- head
+//             WHILE p.next != NULL and i<= index-1 DO
+//                 p <- p.next
+//                 i <- i+1
+//             END WHILE
+//             nw.next <- p.next
+//             p.next <- nw
+//         END IF
+//         Prompt user to continue (1) or stop (0)
+//     END WHILE
+//     RETURN HEAD
+// END
+
 node *deleteNode_at_index(node *head,int index){
      if (head == NULL) {
         printf("List is empty.\n");
@@ -147,6 +241,27 @@ node *deleteNode_at_index(node *head,int index){
     }
     return head;
 }
+
+//Algorithm of deleteNode_at_index()
+// deleteNode_at_index(head,index)
+// BEGIN
+//      IF head == NULL THEN
+//          print "Empty List"
+//          RETURN NULL 
+//      ELSE IF head.next != NULL
+//          free the head
+//      ELSE
+//          initialize the node p <- head and q <- p.next
+//          WHILE q.next != NULL DO
+//              p <- p.next
+//              q <- q.next
+//          END WHILE
+//          p.next <- NULL
+//          free the node q
+//      END IF
+//      RETURN head
+
+// END
 
 void free_list(node* head) {
     node* temp;
