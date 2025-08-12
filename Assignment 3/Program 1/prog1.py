@@ -14,6 +14,11 @@ class linkedList:
     def __init__(self):
         self.head = None
 
+    def createList(self,num):
+        for i in range(num):
+            data = int(input("Enter the number: "))
+            self.insert_at_last(data)
+
     def insert_at_first(self,data):
         new_node = node(data)
         new_node.next = self.head
