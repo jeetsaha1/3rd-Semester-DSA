@@ -1,0 +1,148 @@
+# Given a singly linked list of size N. The task is to swap elements in the linked list pairwise. For example, if the input list is 1 2 3 4, the resulting list after swaps will be 2 1 4 3. 
+
+class node:
+    def __init__(self,data):
+        self.data =data
+        self.next = None
+
+class linkedList:
+    def __init__(self):
+        self.head = None
+
+    def createList(self,num):
+        for i in range(num):
+            data = int(input("Enter the number: "))
+            self.insert_at_last(data)
+
+    def insert_at_first(self,data):
+        new_node = node(data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def delete_at_first(self):
+        if self.head is not None:
+            self.head = self.head.next
+
+    def insert_at_last(self,data):
+        new_node = node(data)
+        if self.head is None:
+            self.head = new_node
+            return 
+        temp = self.head
+        while temp.next:
+            temp = temp.next
+        temp.next = new_node
+        new_node.next = None
+
+    def delete_at_last(self):
+        if self.head == None:
+            print("Empty List")
+        if self.head.next == None:
+            self.head = None
+            return
+        temp = self.head
+        while temp.next.next:
+            temp = temp.next
+        temp.next = None
+        
+    def insert_at_index(self,data,index):
+        new_node = node(data)
+        i=0
+        p = self.head
+        if (index == 0):
+            new_node.next = self.head
+            self.head = new_node
+            return
+        while p and i< index-1:
+            p = p.next
+            i+=1
+
+        new_node.next = p.next
+        p.next = new_node
+
+    def delete_at_index(self,index):
+            if self.head == None:
+                print("Empty List")
+            i=0
+            if index == 0:
+                t = self.head
+                self.head = self.head.next
+                del(t)
+                return
+            temp = self.head
+            while temp and i< index-1:
+                temp = temp.next
+                i+=1
+            temp2 = temp.next
+            temp.next = temp2.next
+            del(temp2)
+        
+    def reverse(self):
+        p = None
+        q = self.head
+        r = q.next
+        while(r is not None):
+            q.next = p
+            p = q
+            q = r
+            r = r.next
+        q.next = p
+        self.head = q
+        
+    def swap_pairWise(self):
+        if self.head is None:
+            return None
+        else:
+            temp = self.head
+            while temp is not None and temp.next is not None:
+                val = temp.data
+                temp.data = temp.next.data
+                temp.next.data = val
+                temp = temp.next.next
+
+    
+    def display(self):
+        temp = self.head
+        while temp:
+            print(temp.data,end="-->")
+            temp = temp.next
+        print("None")
+
+if __name__ == "__main__":
+    n = linkedList()
+    ch = 0
+    while ch != 9:
+        ch = int(input("___MENU___\nEnter the choice\n1.CreateNode at first\n2.CreateNode at last\n3.CreateNode at index\n4.DeleteNode at first\n5.DeleteNode at last\n6.DeleteNode at index\n7.Reverse the list by link\n8.Swap pair wise\n\n"))
+        match ch:
+            case 1:
+                data = int(input("Enter the data: "))
+                n.insert_at_first(data)
+                n.display()
+            case 2:
+                data = int(input("Enter the data: "))
+                n.insert_at_last(data)
+                n.display()
+            case 3:
+                index = int(input("Enter the index: "))
+                data = int(input("Enter the data: "))
+                n.insert_at_index(data,index)
+                n.display()
+            case 4:
+                n.delete_at_first()
+                n.display()
+            case 5:
+                n.delete_at_last()
+                n.display()
+            case 6:
+                index = int(input("Enter the index: "))
+                n.delete_at_index(index)
+                n.display()
+            case 7:
+                n.reverse()
+                n.display()
+            case 8:
+                n.swap_pairWise()
+                n.display()
+            case 9:
+                print("Exiting...")
+        
