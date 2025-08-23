@@ -1,0 +1,72 @@
+                                /*Algorithms for Double Linked List*/
+
+1. Display the elements from linked List
+
+displayList(head)
+BEGIN
+    IF head == NULL THEN
+        print "Empty List"
+        RETURN
+    ENDIF
+    temp <- head
+    WHILE temp.next != head DO
+        print "temp.data"
+        temp <- temp.next
+    ENDWHILE
+    print temp.data
+END
+
+
+2. Add elements at the begining 
+insert_at_begining(head,val)
+BEGIN
+    Initialize the node nw
+    nw.data <- val
+    nw.prev and nw. next <= NULL
+
+    IF head == NULL DO
+        head <= nw
+        nw.prev and nw.next <- nw
+    ELSE
+        nw.next <= head
+        head.prev = nw;
+        head <- nw
+    RETURN head
+END
+
+
+3. Add elements at the end
+insert_at_end(head,val)
+BEGIN
+    Initialize the node nw
+    nw.data <- val
+    nw.prev and nw. next <= NULL
+
+    IF head == NULL DO
+        head <= nw
+        nw.prev and nw.next <- nw
+    ELSE
+        Initialize tail <- head
+        WHILE tail.next != NULL DO
+            tail <- tail.next
+        tail.next <- nw
+        nw.prev <- tail
+        tail<- nw
+        nw.next <- NULL
+    RETURN head
+END
+
+
+4. Add element at any position
+insert_at_any(head,val,index)
+BEGIN
+    Initialize the node nw
+    nw.data <- val
+    nw.prev and nw. next <= NULL
+
+    IF index == 0
+        RETURN insert_at_begining(head,val)
+    ELSE
+        Initialize tail <- head
+        Initialize i <- 0
+        
