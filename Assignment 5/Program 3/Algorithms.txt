@@ -31,6 +31,7 @@ BEGIN
         nw.next <= head
         head.prev = nw;
         head <- nw
+    END IF
     RETURN head
 END
 
@@ -53,6 +54,7 @@ BEGIN
         nw.prev <- tail
         tail<- nw
         nw.next <- NULL
+    END IF
     RETURN head
 END
 
@@ -69,4 +71,109 @@ BEGIN
     ELSE
         Initialize tail <- head
         Initialize i <- 0
-        
+        WHILE tail.next != NULL && i<index -1
+            tail <- tail.next
+            i <- i+1
+        IF tail.next == NULL THEN
+            tail.next <- nw
+            mw.prev <- tail
+        ELSE
+            nw.next <- tail.next
+            tail.next.prev <- nw
+            tail.next <-nw
+            nw.prev <- tail
+        END IF
+    RETURN head
+END
+
+
+5. Searching element
+searching_element(head,ele)
+BEGIN
+    Initialize f=i <- 0
+    IF head == NULL THEN
+        RETURN 0;
+    ELSE
+        Initialize temp <- head
+        WHILE temp != NULL DO
+            IF temp.data == ele THEN 
+                f <= i
+                break
+            i <- i+1
+            temp <- temp.next
+        END while
+    END IF
+    RETURN f
+END
+
+
+6. Counting the node
+count_nodes(head)
+BEGIN
+    Initialize count <- 0
+    IF head == NULL THEN 
+        RETURN 0
+    ELSE
+        Initialize temp <- head
+        WHILE temp != NULl DO
+            count <- count +1
+            temp <- temp.next
+        END WHILE
+    ENDIF
+    RETURN count
+END
+
+
+7. Deleting the node from the begining
+delete_at_begining(head)
+BEGIN
+    Initialize temp <- head
+    head <- head.next
+    temp.next <- NULL
+    temp.prev <- NULL
+    FREE the temp
+    RETURN head
+END
+
+
+8. Deleting the node from the ending 
+delete_at_end(head)
+BEGIN
+    IF head == NULL THEN
+        RETURN NULL
+    ELSE
+        Initialize tail <- head
+        WHILE teil.next != NULL
+            tail <- tail.next
+        tail.prev.next <= NULL
+        tail.prev <- NULL
+        FREE the tail
+    ENDIF
+    RETURN head
+END
+
+
+9. Deleting the node from any position
+delete_at_any(head,index)
+BEGIN
+    IF head == NULL THEN 
+        RETURN NULL
+    END IF
+    IF index == 0 THEN 
+        RETURN delete_at_begining(head)
+    ELSE
+        Initialize tail <- head
+        Initialize i <- 0
+        WHILE teil != NULL and i<index
+            tail <- tail.next
+            i <- i+1
+        END WHILE
+        IF tail.prev != NULL THEN
+            tail.prev.next <- tail.prev
+        END IF
+        IF tail.next != NULL THEN
+            tail.next.prev <- tail.prev
+        END IF
+        FREE tail
+    RETURN head
+END
