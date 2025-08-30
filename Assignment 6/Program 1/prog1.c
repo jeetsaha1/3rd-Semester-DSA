@@ -92,7 +92,7 @@ int height (int tree[], int i){
     if (tree[i] == -1)
         return 0;
     else{
-        int lefthight = height(tree, 2*i+1);
+        int lefthight = height(tree, 2*i+1);    
         int rightheight = height(tree, 2*i+2);
         return 1+ max(lefthight,rightheight);
     }
