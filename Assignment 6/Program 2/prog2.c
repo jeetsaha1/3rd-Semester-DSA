@@ -1,198 +1,140 @@
-// Write a program to implement Binary Tree using linked list along with the     
-//      following functions: 
-// To create a binary tree.
-//  To display tree using inorder.
-// To display tree using preorder.
-// To display tree using postorder.
-// To count number of node present in the tree.
-// To find the height of the tree.
-// To find the number of leaf node.
-// To find the number of internal node.
-// To search a data present in the tree.
-
+//infix to postfix operation
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 
-//At first making a structure for making a node
-typedef struct Node{
-    int data;
-    struct Node *left;
-    struct Node *right;
-}node;
+//Implementing the structure stack
+typedef struct Stack{
+    char *arr;
+    int size;
+    int top;
+}stack;
 
-//a. Creating a binary tree
-node *createBinaryTree(){
-    node *nw , *root = NULL;
-    int data, ch = -1;
-
-    while(ch != 0){
-        printf("Enter the data: ");
-        scanf("%d",&data);
-
-        nw = (node*)malloc(sizeof(node));
-        nw->data = data;
-        nw->left = nw->right = NULL;
-
-        if (root == NULL)
-            root = nw;
-        else{
-            node *p = root;
-            while(1){
-                char side[10];
-                printf("In which side you want to insert: ");
-                scanf("%s",side);
-
-                if (strcmp(side,"left") == 0){
-                    if (p->left == NULL){
-                        p->left = nw;
-                        break;
-                    }
-                    else
-                        p = p->left;
-                }
-                else if (strcmp(side,"right")== 0)
-                {
-                    if (p->right == NULL){
-                        p->right = nw;
-                        break;
-                    }
-                    else
-                        p = p->right;
-                }
-            }
-            
-        }
-        printf("Do you want to insert (1/0): ");
-        scanf("%d",&ch);
-    }
-    return root;
-}
-
-//b. Inorder
-void inorder(node *root){
-    if (root != NULL){
-        inorder(root->left);
-        printf("%d ",root->data);
-        inorder(root->right);
-    }
-}
-
-//c.Preorder
-void preorder(node *root){
-    if (root != NULL){
-        printf("%d ",root->data);
-        preorder(root->left);
-        preorder(root->right);
-    }
-}
-
-//d. Postorder
-void postorder(node *root){
-    if (root != NULL){
-        postorder(root->left);
-        postorder(root->right);
-        printf("%d ",root->data);
-    }
-}
-
-//e. Counting nodes
-int count_nodes(node *root){
-    if (root == NULL)
-        return 0;
-    else{
-        return 1+count_nodes(root->left)+ count_nodes(root->right);
-    }
-}
-
-int max(int a, int b){
-    return a>b?a:b;
-}
-
-//f.height of the tree
-int height(node *root){
-    if (root == NULL)
-        return 0;
-    else{
-        int leftHeight = height(root->left);
-        int rightHeight = height(root->right);
-        return 1 + max(rightHeight,leftHeight);
-    }
-}
-
-//g.Number of leaf node
-int count_leaf_node(node *root){
-    if (root == NULL)
-        return 0;
-    if (root != NULL && (root->left == NULL || root->right == NULL))
+//Defining the function isFull
+int isFull(stack *ptr){
+    if(ptr->top == ptr->size-1)
         return 1;
-    return count_leaf_node(root->left) + count_leaf_node(root->right);   
-}
-
-//h. Counting the internal node
-int count_internal_node(node *root){
-    if (root == NULL)
-        return 0;
-    if (root->left == NULL && root->right == NULL)
-        return 0;
-    return 1 + count_internal_node(root->left) + count_internal_node(root->right);   
-}
-
-//i. Searching an element
-int searching_element(node *root, int ele){
-    if (root == NULL)
-        return 0;
-    if (root->data == ele)
-        return 1;
-    else{
-        return searching_element(root->left,ele);
-    }
-    return searching_element(root->right,ele);
-    
-}
-int main(){
-    node *root;
-    root = createBinaryTree();
-    inorder(root);
-    printf("\n");
-    preorder(root);
-    printf("\n");
-    postorder(root);
-    printf("\n");
-
-    printf("The number of nodes: %d",count_nodes(root));
-    printf("\n");
-    printf("The height of the tree: %d",height(root));
-    printf("\n");
-    printf("The number of the leaf nodes: %d",count_leaf_node(root));
-    printf("\n");
-    printf("The number of interal node is: %d",count_internal_node(root));
-    printf("\n");
-    int ele;
-    printf("Enter the number for seraching: ");
-    scanf("%d",&ele);
-    int res = searching_element(root,ele);
-    if (res != 0)
-        printf("The element is found");
-    else
-        printf("Not found");
     return 0;
 }
 
-// Enter the data: 10
-// Do you want to insert (1/0): 1
-// Enter the data: 4
-// In which side you want to insert: left
-// Do you want to insert (1/0): 1
-// Enter the data: 6
-// In which side you want to insert: right
-// Do you want to insert (1/0): 0
-// 4 10 6 
-// 10 4 6
-// 4 6 10
-// The number of nodes: 3
-// The height of the tree: 2
-// The number of the leaf nodes: 2
-// The number of interal node is: 1
-// Enter the number for seraching: 10
-// The element is found
+//Defining the function isEmpty
+int isEmpty(stack *ptr){
+    if (ptr->top == -1)
+        return 1;
+    return 0;
+}
+
+void push(stack *ptr, int val){
+    if(isFull(ptr)){
+        printf("Stack Overflow");
+        return ;
+    }
+    else{
+        ptr->top ++;
+        ptr->arr[ptr->top] = val;
+    }
+}
+
+char pop(stack *ptr){
+    if(isEmpty(ptr)){
+        printf("Empty Stack");
+        return 0;
+    }
+    else{
+        char item = ptr->arr[ptr->top];
+        ptr->top --;
+        return item;
+    }
+}
+
+void display(stack *ptr){
+    if(isEmpty(ptr))
+        printf("Empty Stack");
+    else{
+        for (int i = ptr->top; i >= 0; i--)
+        {
+            printf("%c",(ptr->arr)[i]);
+        }
+        
+    }
+} 
+
+int stackTop(stack *ptr){
+    return ptr->arr[ptr->top];
+}
+
+int stackBottom(stack * ptr){
+    return ptr->arr[0];
+}
+
+int isOperator(char a){
+    if(a == '+' ||a == '-' ||a == '*' ||a == '/' )
+        return 1;
+    else
+        return 0;
+}
+
+int precedence(char a){
+    if (a == '*' || a == '/')
+        return 3;
+    else if(a == '+' || a == '-')
+        return 2;
+    else
+        return 0;
+}
+
+char *infix_to_postfix(char *infix){
+    stack *sp = (stack*)malloc(sizeof(stack));
+    sp->top = -1;
+    sp->size = strlen(infix);
+    sp->arr = (char*)malloc(sp->size*sizeof(char));
+    char *postfix = (char*)malloc((strlen(infix)+1)*sizeof(char));
+
+    int i = 0;  //Infix scanner
+    int j = 0;  //Postfix filler
+
+    while(infix[i] != '\0'){
+        if (infix[i] == '('){
+            push(sp,infix[i]);
+            i++;
+        }
+        else if (!isOperator(infix[i]) && infix[i] != ')'&& infix[i] != '('){
+            postfix[j] = infix[i];
+            i++;
+            j++;
+        }
+        else if (isOperator(infix[i])){
+            while (!isEmpty(sp) && precedence(stackTop(sp))>precedence(infix[i])){
+                int temp = pop(sp);
+                postfix[j] = temp;
+                j++;
+            }
+            push(sp,infix[i]);
+            i++;
+        }
+        else if(infix[i] == ')'){
+            while (stackTop(sp) != '('){
+                postfix[j++] = pop(sp);
+            }
+            pop(sp);
+            i++;
+        }
+    }
+    while (!isEmpty(sp))
+    {
+        // if (stackTop(sp) == '(' || stackTop(sp) == ')')
+        //     pop(sp);
+        postfix[j] = pop(sp);
+        j++;
+    }
+    postfix[j] = '\0';
+    return postfix;
+}
+
+int main(){
+    char * infix;
+    printf("Enter the expression: ");
+    scanf("%s",infix);
+    printf("%s",infix_to_postfix(infix));
+    return 0;
+}
