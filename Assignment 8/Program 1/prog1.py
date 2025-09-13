@@ -226,3 +226,12 @@ if __name__ == "__main__":
     print("\n",bst.max_value())
 
     print("\n",bst.min_value()) 
+
+
+    # suppose bst.root is already built
+# total_nodes = bst.count_nodes(bst.root)
+
+# if bst.is_complete(bst.root, 0, total_nodes):
+#     print("Tree is Complete")
+# else:
+#     print("Tree is NOT Complete")
