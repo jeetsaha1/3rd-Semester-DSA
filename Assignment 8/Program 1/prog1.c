@@ -93,7 +93,7 @@ int height(node *root){
 int count_leaf_node(node *root){
     if (root == NULL)
         return 0;
-    if (root != NULL && (root->left == NULL || root->right == NULL))
+    if (root->left == NULL || root->right == NULL)
         return 1;
     return count_leaf_node(root->left) + count_leaf_node(root->right);   
 }
@@ -101,7 +101,7 @@ int count_leaf_node(node *root){
 int count_internal_node(node *root){
     if (root == NULL)
         return 0;
-    if (root != NULL && (root->left == NULL || root->right == NULL))
+    if (root->left == NULL || root->right == NULL)
         return 0;
     return 1+count_internal_node(root->left)+count_internal_node(root->right);
 }
@@ -125,6 +125,8 @@ int isBST(struct Node * root){
         {
             return 0;
         }
+        if (prev != NULL && root->data <= prev->data)
+            return 0;
         prev = root;
         return isBST(root->right);
     }
@@ -150,20 +152,19 @@ int max_value(node *root){
 
 int counting_NULL_pointer(node *root){
     if (root == NULL)
-        return 0;
-    if (root != NULL &&(root->left == NULL || root->right == NULL))
         return 1;
-    return 2*(counting_NULL_pointer(root->left)+counting_NULL_pointer(root->right));
+    return counting_NULL_pointer(root->left)+counting_NULL_pointer(root->right)klj;
 }
 
-int balance_factor(node *root, int ele){
+int balance_factor(node *root, int ele) {
     if (root == NULL)
-        return 0;
-    if (root->data > ele)
-        return balance_factor(root->left,ele);
-    if (root->data < ele)
-        return balance_factor(root->right,ele);
-    else{
+        return -9999;  // element not found flag
+
+    if (ele < root->data)
+        return balance_factor(root->left, ele);
+    else if (ele > root->data)
+        return balance_factor(root->right, ele);
+    else { 
         int left_height = height(root->left);
         int right_height = height(root->right);
         return left_height - right_height;
@@ -183,6 +184,8 @@ void insert(node * root,int key){
     }
 
     node *nw = (node*)malloc(sizeof(node));
+    nw->data = key;
+    nw->left = nw->right = NULL;
     if(key < prev->data)
         prev->left = nw;
     else
@@ -275,7 +278,7 @@ int main(){
     inorder(root);
     //13
     printf("Enter the element for checking Balance factor: ");
-    scanf("%d\n",&ele);
+    scanf("%d",&ele);
     printf("%d",balance_factor(root,ele));
     //14
     printf("Max node: %d\n",max_value(root));

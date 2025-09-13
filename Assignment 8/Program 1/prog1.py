@@ -28,27 +28,201 @@ class BST:
         self.root = None
     
     def createBST(self,data):
-        if self.root is None:
-            newNode = node(data)
-            self.root = newNode
-        elif self.root.data > data:
-            self.root.left = self.createBST(self.root.left, data)
-        elif self.root.data < data:
-            self.root.right = self.createBST(self.root.right, data)
-        return self.root
+        def _createBST(root,data):
+            if root is None:
+                return node(data)
+            elif root.data > data:
+                root.left = _createBST(root.left, data)
+            elif root.data < data:
+                root.right = _createBST(root.right, data)
+            return root
+        self.root = _createBST(self.root,data)
     
     def inorder(self):
-        if self.root is not None:
-            self.inorder(self.root.left)
-            print(self.root.data,end=" ")
-            self.inorder(self.root.right)
+        def _inorder(root):
+            if root is not None:
+                _inorder(root.left)
+                print(root.data,end=" ")
+                _inorder(root.right)
+        _inorder(self.root)
+
+    def preorder(self):
+        def _preorder(root):
+            if root is not None:
+                print(root.data,end=" ")
+                _preorder(root.left)
+                _preorder(root.right)
+        _preorder(self.root)
+
+    def postorder(self):
+        def _postorder(root):
+            if root is not None:
+                _postorder(root.left)
+                _postorder(root.right)
+                print(root.data, end=" ")
+        _postorder(self.root)
+
+    def count_node(self):
+        def _count_node(root):
+            if root is None:
+                return 0
+            else:
+                return 1 + _count_node(root.left)+ _count_node(root.right)
+        return _count_node(self.root)
+    
+    def height(self):
+        def _height(root):
+            if root is None:
+                return 0
+            else:
+                left = _height(root.left)
+                right = _height(root.right)
+                return 1 + max(left,right)
+        return _height(self.root)
+    
+    def count_leaf_node(self):
+        def _count_leaf_node(root):
+            if root == None:
+                return 0
+            elif root.left == None and root.right == None:
+                return 1
+            else:
+                return _count_leaf_node(root.left)+ _count_leaf_node(root.right)
+        return _count_leaf_node(self.root)
+    
+    def count_internal_node(self):
+        def _count_internal_node(root):
+            if root == None:
+                return 0
+            elif root.left == None and root.right == None:
+                return 0
+            else:
+                return 1 +  _count_internal_node(root.left)+ _count_internal_node(root.right)
+        return _count_internal_node(self.root)
+    
+    def searchBSt(self,data):
+        def _searchBSt(root,data):
+            if root is None:
+                return 0
+            if root.data == data:
+                return 1
+            elif (root.data >= data):
+                return _searchBSt(root.left, data)
+            else:
+                return _searchBSt(root.right,data)
+        return _searchBSt(self.root,data)
+    
+    def complete_bin_tree(self):
+        if self.root is None:
+            return True
+        queue = [self.root]
+        flag = False
+        while queue:
+            current = queue.pop(0)
+            if current.left:
+                if flag:
+                    return False
+                queue.append(current.left)
+            else:
+                flag = True
+            if current.right:
+                if flag:
+                    return False
+                queue.append(current.right)
+            else:
+                flag = True
+        return True
+    
+    # def is_complete(self, root, index, total_nodes):
+    #     if root is None:
+    #         return True
+    #     if index >= total_nodes:
+    #         return False
+    #     return (self.is_complete(root.left, 2*index + 1, total_nodes) and
+    #             self.is_complete(root.right, 2*index + 2, total_nodes))
+    
+    def insert(self, data):
+        def _insert(root,data):
+            while root != None:
+                prev = root
+                if root.data > data:
+                    root = root.left
+                elif root.data < data:
+                    root = root.right
+                else:
+                    return
+            nw = node(data)
+            if data < prev.data:
+                prev.left = nw
+            else:
+                prev.right = nw
+        self.root = _insert(self.root,data)
+
+    def max_value(self):
+        if self.root is None:
+            raise ValueError("The tree is empty, no maximum value.") 
+        current = self.root
+        while current.right is not None:
+            current = current.right
+        return current.data
+
+    def min_value(self):
+        if self.root is None:
+            raise ValueError("The tree is empty, no maximum value.") 
+        current = self.root
+        while current.left is not None:
+            current = current.left
+        return current.data   
+        
+    def count_NULL_pointer(self):
+        def _count_NULL_pointer(root):
+            if root == None:
+                return 1
+            return _count_NULL_pointer(root.left)+ _count_NULL_pointer(root.right)
+        return _count_NULL_pointer(self.root)
+    
 
 if __name__ == "__main__":
     bst = BST()
+
     ch = -1
     while ch != 0:
         data = int(input("Enter the data: "))
         bst.createBST(data)
         ch = int(input("Do you want to insert:"))
+
     print("Inorder: ")
     bst.inorder()
+
+    print("\nPreorder: ")
+    bst.preorder()
+
+    print("\nPostorder: ")
+    bst.postorder()
+
+    print("\n",bst.count_node())
+
+    print("\n",bst.height())
+
+    print("\n",bst.count_leaf_node())
+
+    print("\n",bst.count_internal_node())
+
+    ele = int(input("Enter the element for searching: "))
+    if bst.searchBSt(ele):
+        print("The element is found")
+    else:
+        print("The element is not found")
+
+    if bst.complete_bin_tree():
+        print("This is a complete binary tree")
+    else:
+        print("This is not a complete binary tree")
+
+    data = int(input("Enter the element to insert: "))
+    bst.insert(data)
+    bst.inorder()
+
+    print("\n",bst.max_value())
+
+    print("\n",bst.min_value()) 
