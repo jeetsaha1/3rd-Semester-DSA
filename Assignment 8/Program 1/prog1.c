@@ -153,7 +153,7 @@ int max_value(node *root){
 int counting_NULL_pointer(node *root){
     if (root == NULL)
         return 1;
-    return counting_NULL_pointer(root->left)+counting_NULL_pointer(root->right)klj;
+    return counting_NULL_pointer(root->left)+counting_NULL_pointer(root->right);
 }
 
 int balance_factor(node *root, int ele) {
