@@ -38,7 +38,7 @@ node *deleteNode_at_first(node *head){
 
 node *createNode_at_last(node *head){
     node *nw, *p;
-    int ch = 1,data;
+    int ch = 1,data; 
     while (ch!=0)
     {
         printf("Enter the data: ");

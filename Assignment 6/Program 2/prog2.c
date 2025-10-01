@@ -110,7 +110,7 @@ char *infix_to_postfix(char *infix){
                 j++;
             }
             push(sp,infix[i]);
-            i++;
+            i++;                                                                                                                                      
         }
         else if(infix[i] == ')'){
             while (stackTop(sp) != '('){
