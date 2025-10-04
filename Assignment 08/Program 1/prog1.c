@@ -117,21 +117,34 @@ int searchBST(node *root, int val){
         return searchBST(root->right,val);
 }
 
-int isBST(struct Node * root){
-    static struct Node * prev =NULL;
-    if (root!=NULL)
-    {
-        if (!isBST(root->left))
-        {
-            return 0;
-        }
-        if (prev != NULL && root->data <= prev->data)
-            return 0;
-        prev = root;
-        return isBST(root->right);
-    }
-    else
+// int isBST(struct Node * root){
+//     static struct Node * prev =NULL;
+//     if (root!=NULL)
+//     {
+//         if (!isBST(root->left))
+//         {
+//             return 0;
+//         }
+//         if (prev != NULL && root->data <= prev->data)
+//             return 0;
+//         prev = root;
+//         return isBST(root->right);
+//     }
+//     else
+//         return 1;
+// }
+
+int iscompleteUtil(node *root, int index, int totalNodes){
+    if(root == NULL)
         return 1;
+    if (index > totalNodes)
+        return 0;
+    return (iscompleteUtil(root->left,2*index+1, totalNodes) && iscompleteUtil(root->right, 2*index+2,totalNodes));
+}
+
+int isComplete(node *root){
+    int totalNodes = count_nodes(root);
+    return iscompleteUtil(root, 0, totalNodes);
 }
 
 int min_value(node *root){
@@ -201,7 +214,7 @@ node * inorderpredecessor(node * root){
 }
 
 node * deleteNode(node * root, int value){
-    struct Node * iPre;   // For taking the in Order Predecessor
+    struct Node *iPre;   // For taking the in Order Predecessor
     if(root==NULL){
         return NULL;
     }
@@ -262,7 +275,7 @@ int main(){
     else
         printf("The element is not found\n");
     //10
-    if(isBST(root))
+    if(isComplete(root))
         printf("This is complete Binary Tree\n");
     else
         printf("This is not a complete Binary Tree\n");

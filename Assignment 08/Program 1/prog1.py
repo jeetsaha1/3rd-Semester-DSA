@@ -112,55 +112,34 @@ class BST:
                 return _searchBSt(root.right,data)
         return _searchBSt(self.root,data)
     
-    def complete_bin_tree(self):
-        if self.root is None:
-            return True
-        queue = [self.root]
-        flag = False
-        while queue:
-            current = queue.pop(0)
-            if current.left:
-                if flag:
-                    return False
-                queue.append(current.left)
-            else:
-                flag = True
-            if current.right:
-                if flag:
-                    return False
-                queue.append(current.right)
-            else:
-                flag = True
-        return True
     
-    # def is_complete(self, root, index, total_nodes):
-    #     if root is None:
-    #         return True
-    #     if index >= total_nodes:
-    #         return False
-    #     return (self.is_complete(root.left, 2*index + 1, total_nodes) and
-    #             self.is_complete(root.right, 2*index + 2, total_nodes))
+    def is_completeUtil(self, root, index, total_nodes):
+        if root is None:
+            return True
+        if index >= total_nodes:
+            return False
+        return (self.is_completeUtil(root.left, 2*index + 1, total_nodes) and
+                self.is_completeUtil(root.right, 2*index + 2, total_nodes))
+    
+    def is_complete(self):
+        totalNodes = self.count_node()
+        return self.is_completeUtil(self.root,0,totalNodes)
     
     def insert(self, data):
-        def _insert(root,data):
-            while root != None:
-                prev = root
-                if root.data > data:
-                    root = root.left
-                elif root.data < data:
-                    root = root.right
-                else:
-                    return
-            nw = node(data)
-            if data < prev.data:
-                prev.left = nw
-            else:
-                prev.right = nw
-        self.root = _insert(self.root,data)
+        def _insert(root, data):
+            if root is None:
+                return node(data)
+            if data < root.data:
+                root.left = _insert(root.left, data)
+            elif data > root.data:
+                root.right = _insert(root.right, data)
+            return root
+        self.root = _insert(self.root, data)
+
 
     def max_value(self):
         if self.root is None:
-            raise ValueError("The tree is empty, no maximum value.") 
+            return None
         current = self.root
         while current.right is not None:
             current = current.right
@@ -168,11 +147,11 @@ class BST:
 
     def min_value(self):
         if self.root is None:
-            raise ValueError("The tree is empty, no maximum value.") 
+            return None
         current = self.root
         while current.left is not None:
             current = current.left
-        return current.data   
+        return current.data  
         
     def count_NULL_pointer(self):
         def _count_NULL_pointer(root):
@@ -214,24 +193,24 @@ if __name__ == "__main__":
     else:
         print("The element is not found")
 
-    if bst.complete_bin_tree():
-        print("This is a complete binary tree")
-    else:
-        print("This is not a complete binary tree")
+    # if bst.complete_bin_tree():
+    #     print("This is a complete binary tree")
+    # else:
+    #     print("This is not a complete binary tree")
 
     data = int(input("Enter the element to insert: "))
     bst.insert(data)
     bst.inorder()
 
-    print("\n",bst.max_value())
+    print(bst.max_value())
 
-    print("\n",bst.min_value()) 
+    print(bst.min_value()) 
 
 
     # suppose bst.root is already built
 # total_nodes = bst.count_nodes(bst.root)
 
-# if bst.is_complete(bst.root, 0, total_nodes):
-#     print("Tree is Complete")
-# else:
-#     print("Tree is NOT Complete")
+if bst.is_complete():
+    print("Tree is Complete")
+else:
+    print("Tree is NOT Complete")
