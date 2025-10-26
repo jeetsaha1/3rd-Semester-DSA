@@ -88,12 +88,14 @@ int main(){
     printf("\n");
 
     //For multiplying two expressions
+    node *temp1 = exp1;
     node* result = NULL;
     node* tail = NULL;
-    while (exp1!= NULL){
-        while(exp2 != NULL){
-            int mul = exp1->coefficient * exp2->coefficient;
-            int pow = exp1->power + exp2->power;
+    while (temp1!= NULL){
+        node *temp2 = exp2;
+        while(temp2 != NULL){
+            int mul = temp1->coefficient * temp2->coefficient;
+            int pow = temp1->power + temp2->power;
             node *nw = (node*)malloc(sizeof(node));
             nw->coefficient = mul;
             nw->power = pow;
@@ -107,9 +109,9 @@ int main(){
                 tail->next = nw;
                 tail = nw;
             }
-            exp1 = exp1->next;
+            temp2 = temp2->next;
         }
-        exp2 = exp2->next;
+        temp1 = temp1->next;
     }
     display(result);
     free_list(result);
